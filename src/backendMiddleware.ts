@@ -5,6 +5,9 @@ import { EncryptionLib, EncryptionLibInterface } from 'src/lib/crypto'
 import { Storage } from 'src/lib/storage/storage'
 import { KeyChain, KeyChainInterface } from 'src/lib/keychain'
 
+import {TypeOrmConfig} from './TypeOrmConfig'
+import { ConnectionOptions } from 'typeorm/browser'
+
 // TODO Type config better
 export class BackendMiddleware {
   identityWallet!: IdentityWallet
@@ -13,9 +16,12 @@ export class BackendMiddleware {
   encryptionLib: EncryptionLibInterface
   keyChainLib: KeyChainInterface
 
-  constructor(config: { fuelingEndpoint: string, typeOrmConfig: any }) {
+
+  // create type interface for typeOrm config
+  constructor(config: { fuelingEndpoint: string, typeOrmConfig: TypeOrmConfig }) {
     this.ethereumLib = new EthereumLib(config.fuelingEndpoint)
-    this.storageLib = new Storage(config.typeOrmConfig),
+    // typecasting is needed for the Storage class to avoid modifying node_modules d.ts files
+    this.storageLib = new Storage(config.typeOrmConfig as ConnectionOptions),
     this.encryptionLib = new EncryptionLib(),
     this.keyChainLib = new KeyChain()
   }
