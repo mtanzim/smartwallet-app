@@ -107,14 +107,14 @@ export class CredentialOverview extends React.Component<Props, State> {
 
     return (
       <Container style={{ padding: 0 }}>
-        <ScrollView style={scrollComponent} contentContainerStyle={loading ? scrollComponentLoading : {}}>
-          {claimCategories.map(this.renderCredentialCategory)}
-        </ScrollView>
-        <Block style={StyleSheet.flatten(qrCodeButtonSection)}>
-          <TouchableOpacity style={qrCodeIconContainer} onPress={this.props.onScannerStart}>
-            <Icon size={30} name="qrcode-scan" color="white" />
-          </TouchableOpacity>
-        </Block>
+        <TouchableOpacity style={qrCodeIconContainer} onPress={this.props.onScannerStart}>
+          <ScrollView style={scrollComponent} contentContainerStyle={loading ? scrollComponentLoading : {}}>
+            {claimCategories.map(this.renderCredentialCategory)}
+          </ScrollView>
+          <Block style={StyleSheet.flatten(qrCodeButtonSection)}>
+              <Icon size={30} name="qrcode-scan" color="white" />
+          </Block>
+        </TouchableOpacity>
       </Container>
     )
   }
